@@ -20,10 +20,6 @@ subprojects {
 	repositories {
 		mavenCentral()
 	}
-
-	dependencies {
-
-	}
 }
 
 repositories {
@@ -31,13 +27,10 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation project(':commons')
-}
-
-bootJar {
-	mainClass  = 'com.connectpdv.ApplicationStarter'
+	compileOnly project(':commons')
+	compileOnly project(':cadastro')
+	compileOnly project(':pdv')
+	compileOnly project(':web')
 }
 
 tasks.named('test') {
@@ -58,20 +51,20 @@ task bootRunPdv {
 
 project(':faturamento') {
 	dependencies {
-		implementation project(':commons')
+		compileOnly project(':commons')
 	}
 
 }
 
 project(':pdv') {
 	dependencies {
-		implementation project(':commons')
+		compileOnly project(':commons')
 	}
 }
 
 project(':cadastro') {
 	dependencies {
-		implementation project(':commons')
+		compileOnly project(':commons')
 	}
 
 }

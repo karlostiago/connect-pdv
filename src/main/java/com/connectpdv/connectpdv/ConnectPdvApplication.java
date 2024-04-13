@@ -1,13 +1,9 @@
 package com.connectpdv.connectpdv;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
 public class ConnectPdvApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConnectPdvApplication.class, args);
+		System.out.println("root project....");
 	}
 
 }
