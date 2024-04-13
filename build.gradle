@@ -32,33 +32,33 @@ dependencies {
 	compileOnly project(':pdv')
 	compileOnly project(':web')
 	compileOnly project(':fiscal')
+	compileOnly project(':faturamento')
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-task bootRunCadastro {
+tasks.register('bootRunCadastro') {
 	dependsOn ':cadastro:bootRun'
 }
 
-task bootRunFaturamento {
+tasks.register('bootRunFaturamento') {
 	dependsOn ':faturamento:bootRun'
 }
 
-task bootRunPdv {
+tasks.register('bootRunPdv') {
 	dependsOn ':pdv:bootRun'
 }
 
-task bootRunFiscal {
-	dependsOn':fiscal:bootRun'
+tasks.register('bootRunFiscal') {
+	dependsOn ':fiscal:bootRun'
 }
 
 project(':faturamento') {
 	dependencies {
 		compileOnly project(':commons')
 	}
-
 }
 
 project(':pdv') {
@@ -71,10 +71,10 @@ project(':cadastro') {
 	dependencies {
 		compileOnly project(':commons')
 	}
+}
 
 project(':fiscal') {
 	dependencies {
 		compileOnly project(':commons')
 	}
-  }
 }
