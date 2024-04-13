@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id "com.moowork.node" version "1.2.0"
+}
+
+apply plugin: 'com.moowork.node'
+
+group = 'com.connectpdv'
+version = 'SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+

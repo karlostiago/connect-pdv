@@ -1,0 +1,77 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.4'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+allprojects {
+	group = 'com.connect-pdv'
+	version = 'SNAPSHOT'
+	sourceCompatibility = '17'
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	sourceCompatibility = '17'
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation project(':commons')
+}
+
+bootJar {
+	mainClass  = 'com.connectpdv.ApplicationStarter'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+task bootRunCadastro {
+	dependsOn ':cadastro:bootRun'
+}
+
+task bootRunFaturamento {
+	dependsOn ':faturamento:bootRun'
+}
+
+task bootRunPdv {
+	dependsOn ':pdv:bootRun'
+}
+
+project(':faturamento') {
+	dependencies {
+		implementation project(':commons')
+	}
+
+}
+
+project(':pdv') {
+	dependencies {
+		implementation project(':commons')
+	}
+}
+
+project(':cadastro') {
+	dependencies {
+		implementation project(':commons')
+	}
+
+}

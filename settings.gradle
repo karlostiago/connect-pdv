@@ -1,0 +1,6 @@
+rootProject.name = 'connect-pdv'
+include 'faturamento'
+include 'pdv'
+include 'commons'
+include 'cadastro'
+include 'web'
