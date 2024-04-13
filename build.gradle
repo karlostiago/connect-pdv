@@ -31,6 +31,7 @@ dependencies {
 	compileOnly project(':cadastro')
 	compileOnly project(':pdv')
 	compileOnly project(':web')
+	compileOnly project(':fiscal')
 }
 
 tasks.named('test') {
@@ -47,6 +48,10 @@ task bootRunFaturamento {
 
 task bootRunPdv {
 	dependsOn ':pdv:bootRun'
+}
+
+task bootRunFiscal {
+	dependsOn':fiscal:bootRun'
 }
 
 project(':faturamento') {
@@ -67,4 +72,9 @@ project(':cadastro') {
 		compileOnly project(':commons')
 	}
 
+project(':fiscal') {
+	dependencies {
+		compileOnly project(':commons')
+	}
+  }
 }
