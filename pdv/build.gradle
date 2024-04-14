@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.2.4'
-	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.springframework.boot'
+	id 'io.spring.dependency-management'
 }
 
 group = 'com.connectpdv'
@@ -20,8 +20,4 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }
