@@ -1,2 +1,5 @@
-package com.util.commons.entity;public class Product {
+package com.util.commons.entity;
+
+public class Product {
+
 }
