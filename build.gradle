@@ -23,9 +23,8 @@ allprojects {
 }
 
 /*
-   Build the application individually just with the gradle faturamento:build command
-*/
-
+ *  Build the application individually just with the gradle faturamento:build command
+ */
 project(":faturamento") {
 	dependencies {
 		compileOnly project(":commons")
@@ -33,9 +32,8 @@ project(":faturamento") {
 }
 
 /*
-	Build the application individually just with the gradle pdv:build command
-*/
-
+ *	Build the application individually just with the gradle pdv:build command
+ */
 project(":pdv") {
 	dependencies {
 		compileOnly project(":commons")
@@ -43,9 +41,8 @@ project(":pdv") {
 }
 
 /*
-	Build the application individually just with the gradle cadastro:build command
-*/
-
+ *	Build the application individually just with the gradle cadastro:build command
+ */
 project(":cadastro") {
 	dependencies {
 		compileOnly project(":commons")
@@ -53,9 +50,8 @@ project(":cadastro") {
 }
 
 /*
-	Build the application individually just with the gradle fiscal:build command
-*/
-
+ *	Build the application individually just with the gradle fiscal:build command
+ */
 project(":fiscal") {
 	dependencies {
 		compileOnly project(":commons")
@@ -63,11 +59,10 @@ project(":fiscal") {
 }
 
 /*
- If you wanted to build the entire application, use gradle :buildAll at the moment the web project was ignored because it was angular
- I didn't think it was necessary to include it in the application build at the moment, but there will probably be an update to manage the project
- web, frontend.
+ * If you wanted to build the entire application, use gradle :buildAll at the moment the web project was ignored because it was angular
+ * I didn't think it was necessary to include it in the application build at the moment, but there will probably be an update to manage the project
+ * web, frontend.
  */
-
 tasks.register('buildAll') {
 	dependsOn {
 		subprojects.findAll { it.name != 'web' }.collect { it.tasks.named('build') }
