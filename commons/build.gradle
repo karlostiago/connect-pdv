@@ -21,7 +21,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
 
-
 bootJar {
 	enabled = false // Desativa a tarefa de criação do JAR executável do Spring Boot
 }
