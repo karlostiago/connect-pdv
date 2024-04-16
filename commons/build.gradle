@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management'
 }
 
-group = 'com.util'
+group = 'com.connectpdv'
 version = 'SNAPSHOT'
 
 sourceCompatibility = JavaVersion.VERSION_17

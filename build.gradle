@@ -59,6 +59,15 @@ project(":fiscal") {
 }
 
 /*
+ *  Build the application individually just with the gradle compras:build command
+ */
+project(":compras") {
+	dependencies {
+		compileOnly project(":commons")
+	}
+}
+
+/*
  * If you wanted to build the entire application, use gradle :buildAll at the moment the web project was ignored because it was angular
  * I didn't think it was necessary to include it in the application build at the moment, but there will probably be an update to manage the project
  * web, frontend.
