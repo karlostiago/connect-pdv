@@ -1,9 +1,8 @@
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo">
-        <span>SAKAI</span>
+        <img src="assets/layout/images/{{ layoutService.config().colorScheme === 'dark' ? 'pdvlogo.png' : 'connectpdv.png' }}" alt="logo" [style]="layoutService.config().colorScheme !== 'light' ? 'width: 120px; height: 120px;' : 'width: 120px; height: 120px;'">
     </a>
-
+    
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
         <i class="pi pi-bars"></i>
     </button>
