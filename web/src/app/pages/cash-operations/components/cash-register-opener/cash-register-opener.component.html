@@ -1,0 +1,82 @@
+<div class="main-container" [class.loading-container]="showLoading">
+    <div class="loading" *ngIf="showLoading">
+        <div 
+            [class.loading-container]="loading-content">
+            {{ messageLoading }}
+        </div>
+        <p-progressSpinner 
+            ariaLabel="loading">
+        </p-progressSpinner>
+    </div>
+
+    <p-messages 
+        [(value)]="messages" 
+        [showTransitionOptions]="'500ms'" 
+        [hideTransitionOptions]="'500ms'" 
+        [enableService]="true">
+    </p-messages>
+
+    <div class="grid md:justify-content-between mt-4">
+        <div class="col-12 md:col-8">
+            <h3>Abertura de Caixa</h3>
+            <small class="text-left"> * - para campos obrigatórios</small>
+        </div>
+        <div class="col-12 md:col-4">
+            <p-breadcrumb></p-breadcrumb>
+        </div>
+    </div>
+
+    <div class="container-legacy 
+                mt-4 
+                mb-4 shadow-2">
+        <p-panel>
+            <ng-template pTemplate="header">
+                <label><strong>Caixa</strong></label>
+            </ng-template>
+
+            <div class="formgrid grid">  
+                <div class="field col-12 md:col-12 p-3">
+                    <span class="p-float-label">
+                        <p-inputNumber 
+                            id="currency-br"
+                            [mode]="'currency'"
+                            [currency]="'BRL'"
+                            [locale]="'pt-BR'"
+                            placeholder="R$ 0,00"
+                            [style]="{ width: '100%' }"
+                            class="w-full"
+                            [ngModel]="saldoInicial"
+                        />
+                        <label 
+                            for="float-input" 
+                            class="obrigatorio">
+                            Saldo Inicial
+                        </label>
+                    </span>
+                </div>
+            </div>
+
+            <ng-template pTemplate="footer">
+                <div class="flex justify-center gap-2">
+                    <button 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        label="Confirmar abertura de caixa" 
+                        class="p-button-raised p-button-success" 
+                        (click)="confirmCashRegister()">
+                    </button>
+
+                    <button 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        label="Cancelar Abertura de caixa" 
+                        class="p-button-raised p-button-danger" 
+                        (click)="cancelCashRegister()">
+                    </button>
+                </div>    
+            </ng-template>
+        </p-panel>
+    </div>
+</div>
