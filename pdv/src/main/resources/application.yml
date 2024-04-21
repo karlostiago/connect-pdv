@@ -6,3 +6,15 @@ server:
 spring:
   application:
     name: pdv
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/pdv
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
