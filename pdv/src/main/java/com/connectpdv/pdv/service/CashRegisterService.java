@@ -6,6 +6,6 @@ import com.util.commons.entity.cashRegister.CashRegister;
 import java.util.List;
 
 public interface CashRegisterService {
-    CashRegister register(CashRegister cashRegister);
+    void register(CashRegister cashRegister);
     List<CashRegister> getRegistersFor(Cash cash);
 }

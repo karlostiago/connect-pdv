@@ -31,7 +31,7 @@ public class CashRegisterServiceImpl implements CashRegisterService {
     }
 
     @Override
-    public CashRegister register(CashRegister cashRegister) {
+    public void register(CashRegister cashRegister) {
         try {
             cashRegister.setRegisterDate(Date.valueOf(LocalDate.now()).toLocalDate());
 
@@ -61,7 +61,7 @@ public class CashRegisterServiceImpl implements CashRegisterService {
                 cashRegister.setObservation(observation);
             }
 
-            return cashRegisterRepository.save(cashRegister);
+            cashRegisterRepository.save(cashRegister);
         } catch (NotificationException e) {
             throw new NotificationException(CASH_REGISTER_ERROR);
         }
