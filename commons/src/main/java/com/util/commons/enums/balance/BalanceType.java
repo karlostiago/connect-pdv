@@ -4,11 +4,12 @@ import lombok.Getter;
 
 @Getter
 public enum BalanceType {
-    Money ("Dinheiro"),
+    MONEY("Dinheiro"),
     CHECK("Cheque"),
     ADVANCE("Adiantamento"),
     VALE_EXCHANGE("Troca"),
-    CARD("Cartao");
+    CARD("Cartao"),
+    PIX("PIX");
 
     private final String description;
 
