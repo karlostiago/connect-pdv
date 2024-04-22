@@ -1,15 +1,22 @@
 package com.util.commons.entity.installment;
 
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
-public class Installment {
+public class Installment extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

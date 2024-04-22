@@ -1,13 +1,20 @@
 package com.util.commons.entity.title;
 
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
 import com.util.commons.entity.cardMachine.CardMachine;
 import com.util.commons.entity.typeTitle.TypeTitle;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
-public class Title {
+public class Title extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

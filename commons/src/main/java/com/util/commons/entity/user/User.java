@@ -1,14 +1,21 @@
 package com.util.commons.entity.user;
 
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
 import com.util.commons.entity.person.Person;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
-public class User {
+public class User extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

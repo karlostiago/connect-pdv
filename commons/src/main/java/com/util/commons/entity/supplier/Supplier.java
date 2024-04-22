@@ -1,14 +1,22 @@
 package com.util.commons.entity.supplier;
 
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
 import com.util.commons.entity.address.Address;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
 import java.util.Date;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
-public class Supplier {
+public class Supplier extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

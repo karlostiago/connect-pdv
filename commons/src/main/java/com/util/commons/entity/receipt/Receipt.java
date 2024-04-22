@@ -1,18 +1,25 @@
 package com.util.commons.entity.receipt;
 
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
 import com.util.commons.entity.installment.Installment;
 import com.util.commons.entity.person.Person;
 import com.util.commons.entity.title.Title;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
-public class Receipt {
+public class Receipt extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

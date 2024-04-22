@@ -1,18 +1,23 @@
 package com.util.commons.entity.cash;
 
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
 import com.util.commons.entity.user.User;
 import com.util.commons.enums.cash.CashType;
-import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
-import lombok.Data;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
 @Data
-public class Cash {
+public class Cash extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

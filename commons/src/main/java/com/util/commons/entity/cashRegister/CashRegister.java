@@ -1,5 +1,7 @@
 package com.util.commons.entity.cashRegister;
 
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
 import com.util.commons.entity.cash.Cash;
 import com.util.commons.entity.payableInstallment.PayableInstallment;
 import com.util.commons.entity.receipt.Receipt;
@@ -7,21 +9,20 @@ import com.util.commons.entity.user.User;
 import com.util.commons.enums.entryStyle.EntryStyle;
 import com.util.commons.enums.entryType.EntryType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Data
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CashRegister {
+@Data
+public class CashRegister extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

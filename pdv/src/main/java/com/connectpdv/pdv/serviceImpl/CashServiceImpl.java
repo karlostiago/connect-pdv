@@ -111,7 +111,7 @@ public class CashServiceImpl implements CashService {
 
     @Override
     public boolean cashIsOpen() {
-        return false;
+        return cashRepository.fetchOpenCash().isPresent();
     }
 
     @Override

@@ -1,14 +1,19 @@
 package com.util.commons.entity.cardMachine;
 
+import com.util.commons.abstraction.AbstractEntity;
 import com.util.commons.entity.cash.Cash;
-import jakarta.persistence.*;
+import com.util.commons.annotation.ExcludedCoverage;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.NumberFormat;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
 @Data
-public class CardMachine {
+public class CardMachine extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

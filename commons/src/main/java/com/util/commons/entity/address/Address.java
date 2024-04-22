@@ -1,13 +1,16 @@
 package com.util.commons.entity.address;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Data
-public class Address {
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
+public class Address extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

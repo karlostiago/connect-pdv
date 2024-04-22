@@ -1,11 +1,18 @@
 package com.util.commons.entity.typeTitle;
 
+import com.util.commons.abstraction.AbstractEntity;
+import com.util.commons.annotation.ExcludedCoverage;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
 @Entity
-public class TypeTitle {
+@EqualsAndHashCode(callSuper = false)
+@ExcludedCoverage
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class TypeTitle extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
