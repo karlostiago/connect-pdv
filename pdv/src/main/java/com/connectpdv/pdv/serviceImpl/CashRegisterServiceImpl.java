@@ -47,7 +47,6 @@ public class CashRegisterServiceImpl implements CashRegisterService {
                 }
 
                 if (cashRegister.getTotalValue().compareTo(BigDecimal.ZERO) > VALUE_DEFAULT_CASH_OPERATION) {
-
                     cashRegister.setTotalValue(cashRegister.getTotalValue().multiply(BigDecimal.valueOf(-1)));
                 }
             }
