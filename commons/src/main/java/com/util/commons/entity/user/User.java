@@ -28,7 +28,7 @@ public class User extends AbstractEntity {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate registerDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
 }

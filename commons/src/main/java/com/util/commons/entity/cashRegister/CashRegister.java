@@ -1,7 +1,6 @@
 package com.util.commons.entity.cashRegister;
 
 import com.util.commons.abstraction.AbstractEntity;
-import com.util.commons.annotation.ExcludedCoverage;
 import com.util.commons.entity.cash.Cash;
 import com.util.commons.entity.payableInstallment.PayableInstallment;
 import com.util.commons.entity.receipt.Receipt;
@@ -10,6 +9,7 @@ import com.util.commons.enums.entryStyle.EntryStyle;
 import com.util.commons.enums.entryType.EntryType;
 import jakarta.persistence.*;
 import lombok.*;
+import com.util.commons.annotation.ExcludedCoverage;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import java.math.BigDecimal;
@@ -39,7 +39,7 @@ public class CashRegister extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private EntryStyle entryStyle;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Cash cash;
 
     @ManyToOne

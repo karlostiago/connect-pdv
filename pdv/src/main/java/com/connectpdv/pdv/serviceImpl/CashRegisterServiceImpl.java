@@ -35,7 +35,7 @@ public class CashRegisterServiceImpl implements CashRegisterService {
         try {
             cashRegister.setRegisterDate(Date.valueOf(LocalDate.now()).toLocalDate());
 
-            if (cashRegister.getCash() == null || cashRegister.getCash().getClosingDate() == null) {
+            if (cashRegister.getCash() == null) {
                 throw new NotificationException(NO_AVAILABLE_REGISTER_FOUND);
             }
 
@@ -47,7 +47,9 @@ public class CashRegisterServiceImpl implements CashRegisterService {
                 }
 
                 if (cashRegister.getTotalValue().compareTo(BigDecimal.ZERO) > VALUE_DEFAULT_CASH_OPERATION) {
+
                     cashRegister.setTotalValue(cashRegister.getTotalValue().multiply(BigDecimal.valueOf(-1)));
+                    cashRegister.getCash().setTotalValue(totalCash.subtract(cashRegister.getTotalValue()));
                 }
             }
 

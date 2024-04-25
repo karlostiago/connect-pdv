@@ -29,7 +29,7 @@ public class Person extends AbstractEntity {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateRegister;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 

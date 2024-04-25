@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface CashRepository extends JpaRepository<Cash, Long> {
-    @Query("select c from Cash c where c.type = 'CASH' and c.closingDate is null")
+    @Query("select c from Cash c where c.types = 'CASH' and c.closingDate is null")
     Optional<Cash> fetchOpenCash();
 }
