@@ -10,29 +10,18 @@ import com.util.commons.entity.user.User;
 import com.util.commons.enums.cash.CashType;
 import com.util.commons.enums.entryStyle.EntryStyle;
 import com.util.commons.enums.entryType.EntryType;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import static com.util.commons.constants.CashConstants.*;
 
 @Component
 public class CashServiceImpl implements CashService {
 
-    private final static String  DAYS_OLD_CASH_OPEN = "Existe Caixa de dias anteriores em aberto, verificar.";
-    private final static String  VALUE_NOT_ACCEPTABLE = "Valor informado é inválido.";
-    private final static String  MESSAGE_ERROR = "Erro no processo de abertura: ";
-    private final static String  INCOMING_CASH_DESCRIPTION = "Abertura de caixa";
-    private final static String  INCOMING_SAFE_DESCRIPTION = "Abertura de Cofre";
-    private final static String  INCOMING_BANK_DESCRIPTION = "Abertura de banco";
-    private final static String  DAILY_CASH_DESCRIPTION = "Caixa diário";
-    private final static String  SAFE_CASH_DESCRIPTION = "Cofre";
-    private final static String  BANK_CASH_DESCRIPTION = "Banco";
-    private final static Integer VALUE_DEFAULT_CASH_OPERATION = 0;
-
     private final CashRepository cashRepository;
     private final UserServiceImpl userServiceImpl;
     private final CashRegisterServiceImpl cashRegisterServiceImpl;
-
-    private String descriptionTypeCash;
 
     public CashServiceImpl(CashRepository cashRepository, UserServiceImpl userServiceImpl,
                            CashRegisterServiceImpl cashRegisterServiceImpl) {
@@ -45,53 +34,28 @@ public class CashServiceImpl implements CashService {
     @Override
     public Cash openCash(Cash cash) {
         try {
-            if (CashType.CASH.equals(cash.getTypes()) && cashIsOpen())
-                throw new NotificationException(DAYS_OLD_CASH_OPEN);
 
-            if (cash.getOpeningValue().compareTo(BigDecimal.ZERO) < VALUE_DEFAULT_CASH_OPERATION)
-                throw new NotificationException(VALUE_NOT_ACCEPTABLE);
-
+            validateCashOpenOfDaysAndValueAcceptable(cash);
             ApplicationContext context = ApplicationContext.getInstance();
+
             User user = userServiceImpl.findUserBy(context.getUserApplicationContext());
-
-            if (CashType.CASH.equals(cash.getTypes()))
-                descriptionTypeCash = cash.getDescription().isBlank() ? DAILY_CASH_DESCRIPTION : cash.getDescription();
-
-            else if (CashType.SAFE.equals(cash.getTypes()))
-                descriptionTypeCash = cash.getDescription().isBlank() ? SAFE_CASH_DESCRIPTION : cash.getDescription();
-
-            else if (CashType.BANK.equals(cash.getTypes()))
-                descriptionTypeCash = cash.getDescription().isBlank() ? BANK_CASH_DESCRIPTION : cash.getDescription();
+            String observation = applyDefaultDescriptionBasedOnCashTypeOf(cash);
 
             LocalDate actualDateOpenCash = LocalDate.now();
 
-            cash.setDescription(descriptionTypeCash);
             cash.setRegisterDate(actualDateOpenCash);
             cash.setUser(user);
 
-            if (cash.getTypes().equals(CashType.BANK)) {
-                cash.setAgency(cash.getAgency().replaceAll("\\D", ""));
-                cash.setAccount(cash.getAccount().replaceAll("\\D", ""));
-            }
+            sanitizeBankCashDetailsOf(cash);
 
-            if (cash.getOpeningValue().compareTo(BigDecimal.ZERO) > VALUE_DEFAULT_CASH_OPERATION) {
-                String observation = CashType.CASH.equals(cash.getTypes()) ? INCOMING_CASH_DESCRIPTION
-                        : CashType.SAFE.equals(cash.getTypes()) ? INCOMING_SAFE_DESCRIPTION : INCOMING_BANK_DESCRIPTION;
-
-                CashRegister cashBuilder = CashRegister.builder()
-                        .observation(observation)
-                        .totalValue(cash.getOpeningValue())
-                        .entryType(EntryType.INITIAL_BALANCE)
-                        .entryStyle(EntryStyle.INCOME)
-                        .cash(cash)
-                        .user(user)
-                        .registerDate(LocalDate.now())
-                        .build();
+            if (isOpeningValueGreaterThanDefault(cash)) {
+                CashRegister cashBuilder = buildCashRegister(cash, user, observation);
                 cashRegisterServiceImpl.register(cashBuilder);
 
-            } else if (cash.getOpeningValue().compareTo(BigDecimal.ZERO) == VALUE_DEFAULT_CASH_OPERATION) {
+            } else if (isOpeningValueEqualToDefault(cash)) {
                 cash.setTotalValue(BigDecimal.valueOf(VALUE_DEFAULT_CASH_OPERATION));
             }
+
             cash.setTotalValue(cash.getOpeningValue());
             cashRepository.save(cash);
 
@@ -106,9 +70,83 @@ public class CashServiceImpl implements CashService {
         return null;
     }
 
-
     @Override
     public boolean cashIsOpen() {
         return cashRepository.fetchOpenCash().isPresent();
+    }
+
+    private boolean isOpeningValueGreaterThanDefault(Cash cash) {
+        BigDecimal openingValue = cash.getOpeningValue();
+        boolean isGreaterThanDefault = openingValue.compareTo(BigDecimal.ZERO) > VALUE_DEFAULT_CASH_OPERATION;
+
+        if (isGreaterThanDefault) {
+            String description = switch (cash.getTypes()) {
+                case CASH -> INCOMING_CASH_DESCRIPTION;
+                case SAFE -> INCOMING_SAFE_DESCRIPTION;
+                case BANK -> INCOMING_BANK_DESCRIPTION;
+                default -> NO_AVAILABLE_REGISTER_FOUND;
+            };
+            cash.setDescription(description);
+        }
+        return isGreaterThanDefault;
+    }
+
+    private boolean isOpeningValueEqualToDefault(Cash cash) {
+        return cash.getOpeningValue().compareTo(BigDecimal.ZERO) == VALUE_DEFAULT_CASH_OPERATION;
+    }
+
+    private void validateCashOpenOfDaysAndValueAcceptable(Cash cash) {
+        if (cash == null) {
+            throw new NotificationException(CASH_NOT_OPEN_OR_EXISTES);
+        }
+
+        if (CashType.CASH.equals(cash.getTypes()) && cashIsOpen()) {
+            throw new NotificationException(DAYS_OLD_CASH_OPEN);
+        }
+
+        if (cash.getOpeningValue().compareTo(BigDecimal.ZERO) < VALUE_DEFAULT_CASH_OPERATION) {
+            throw new NotificationException(VALUE_NOT_ACCEPTABLE);
+        }
+    }
+
+    private String applyDefaultDescriptionBasedOnCashTypeOf(Cash cash) {
+        if (cash == null) {
+            throw new IllegalArgumentException(CASH_NOT_OPEN_OR_EXISTES);
+        }
+        String observation = cash.getDescription();
+
+        if (StringUtils.isBlank(observation)) {
+            String defaultDescription = switch (cash.getTypes()) {
+                case CASH -> DAILY_CASH_DESCRIPTION;
+                case SAFE -> SAFE_CASH_DESCRIPTION;
+                case BANK -> BANK_CASH_DESCRIPTION;
+                default -> CASH_NOT_RECOGNIZED;
+            };
+            cash.setDescription(defaultDescription);
+        }
+        return observation;
+    }
+
+    private void sanitizeBankCashDetailsOf(Cash cash) {
+        if (cash == null) {
+            throw new NotificationException(CASH_NOT_OPEN_OR_EXISTES);
+        }
+
+        if (cash.getTypes().equals(CashType.BANK)) {
+            cash.setAgency(cash.getAgency().replaceAll("\\D", ""));
+            cash.setAccount(cash.getAccount().replaceAll("\\D", ""));
+        }
+    }
+
+    private CashRegister buildCashRegister(Cash cash, User user, String observation) {
+        return CashRegister.builder()
+                .observation(observation)
+                .totalValue(cash.getOpeningValue())
+                .entryType(EntryType.INITIAL_BALANCE)
+                .entryStyle(EntryStyle.INCOME)
+                .cash(cash)
+                .user(user)
+                .registerDate(LocalDate.now())
+                .build();
     }
 }

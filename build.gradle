@@ -27,7 +27,7 @@ allprojects {
  */
 project(":faturamento") {
 	dependencies {
-		compileOnly project(":commons")
+		implementation project(':commons')
 	}
 }
 
@@ -36,7 +36,7 @@ project(":faturamento") {
  */
 project(":pdv") {
 	dependencies {
-		compileOnly project(":commons")
+		implementation project(':commons')
 	}
 }
 
@@ -45,7 +45,7 @@ project(":pdv") {
  */
 project(":cadastro") {
 	dependencies {
-		compileOnly project(":commons")
+		implementation project(':commons')
 	}
 }
 
@@ -54,7 +54,7 @@ project(":cadastro") {
  */
 project(":fiscal") {
 	dependencies {
-		compileOnly project(":commons")
+		implementation project(':commons')
 	}
 }
 
@@ -63,7 +63,7 @@ project(":fiscal") {
  */
 project(":compras") {
 	dependencies {
-		compileOnly project(":commons")
+		implementation project(':commons')
 	}
 }
 

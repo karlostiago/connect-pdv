@@ -1,7 +1,5 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot'
-	id 'io.spring.dependency-management'
 }
 
 group = 'com.connectpdv'
@@ -24,6 +22,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
-bootJar {
-	enabled = false // Disables the Spring Boot executable JAR creation task
+/*
+	Customized task configuration to generate a standard commons JAR,
+	as before without a main class it was not possible to execute a task to generate the commons jar
+*/
+tasks.register('buildModule', Jar) {
+	from(sourceSets.main.output)
+	archiveFileName = "${project.name}.jar"
 }

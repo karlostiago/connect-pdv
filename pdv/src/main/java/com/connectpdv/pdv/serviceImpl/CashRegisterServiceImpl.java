@@ -13,16 +13,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import static com.util.commons.constants.CashConstants.*;
 
 @Component
 public class CashRegisterServiceImpl implements CashRegisterService {
-
-    private final static String  NO_AVAILABLE_REGISTER_FOUND = "Nenhum caixa aberto";
-    private final static String  INSUFFICIENT_BALANCE = "Saldo insuficiente para realizar esta operação";
-    private final static String  CASH_REGISTER_ERROR = "Erro ao realizar lançamento";
-    private final static String  SUPPLY_OBSERVATION = "Suprimento de caixa";
-    private final static String  BLEED_OBSERVATION = "Sangria de caixa";
-    private final static Integer VALUE_DEFAULT_CASH_OPERATION = 0;
 
     private final CashRegisterRepository cashRegisterRepository;
 
