@@ -2,7 +2,7 @@ package com.connectpdv.pdv.serviceImpl;
 
 import com.connectpdv.pdv.repository.UserRepository;
 import com.connectpdv.pdv.service.UserService;
-import com.util.commons.entity.user.User;
+import com.util.commons.entity.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.sql.Date;

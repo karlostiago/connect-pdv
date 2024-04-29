@@ -1,7 +1,6 @@
-package com.util.commons.entity.cardMachine;
+package com.util.commons.entity;
 
 import com.util.commons.abstraction.AbstractEntity;
-import com.util.commons.entity.cash.Cash;
 import com.util.commons.annotation.ExcludedCoverage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

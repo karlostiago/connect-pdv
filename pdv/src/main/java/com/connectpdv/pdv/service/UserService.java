@@ -1,6 +1,6 @@
 package com.connectpdv.pdv.service;
 
-import com.util.commons.entity.user.User;
+import com.util.commons.entity.User;
 
 import java.util.List;
 

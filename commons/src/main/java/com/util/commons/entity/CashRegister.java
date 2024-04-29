@@ -1,10 +1,6 @@
-package com.util.commons.entity.cashRegister;
+package com.util.commons.entity;
 
 import com.util.commons.abstraction.AbstractEntity;
-import com.util.commons.entity.cash.Cash;
-import com.util.commons.entity.payableInstallment.PayableInstallment;
-import com.util.commons.entity.receipt.Receipt;
-import com.util.commons.entity.user.User;
 import com.util.commons.enums.entryStyle.EntryStyle;
 import com.util.commons.enums.entryType.EntryType;
 import jakarta.persistence.*;
@@ -31,7 +27,7 @@ public class CashRegister extends AbstractEntity {
     private String observation;
 
     @NumberFormat(pattern = "##,##0.00")
-    private BigDecimal totalValue = BigDecimal.ZERO;
+    private BigDecimal totalValue;
 
     @Enumerated(EnumType.STRING)
     private EntryType entryType;

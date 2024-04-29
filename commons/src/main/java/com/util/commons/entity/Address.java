@@ -1,4 +1,4 @@
-package com.util.commons.entity.address;
+package com.util.commons.entity;
 
 import com.util.commons.abstraction.AbstractEntity;
 import com.util.commons.annotation.ExcludedCoverage;

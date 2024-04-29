@@ -2,11 +2,10 @@ package com.connectpdv.pdv.serviceImpl;
 
 import com.connectpdv.pdv.exceptions.notify.NotificationException;
 import com.connectpdv.pdv.repository.CashRepository;
-import com.connectpdv.pdv.security.ApplicationContext;
 import com.connectpdv.pdv.service.CashService;
-import com.util.commons.entity.cash.Cash;
-import com.util.commons.entity.cashRegister.CashRegister;
-import com.util.commons.entity.user.User;
+import com.util.commons.entity.Cash;
+import com.util.commons.entity.CashRegister;
+import com.util.commons.entity.User;
 import com.util.commons.enums.cash.CashType;
 import com.util.commons.enums.entryStyle.EntryStyle;
 import com.util.commons.enums.entryType.EntryType;
@@ -36,9 +35,8 @@ public class CashServiceImpl implements CashService {
         try {
 
             validateCashOpenOfDaysAndValueAcceptable(cash);
-            ApplicationContext context = ApplicationContext.getInstance();
 
-            User user = userServiceImpl.findUserBy(context.getUserApplicationContext());
+            User user = userServiceImpl.findUserBy(cash.getUser().getUserName());
             String observation = applyDefaultDescriptionBasedOnCashTypeOf(cash);
 
             LocalDate actualDateOpenCash = LocalDate.now();

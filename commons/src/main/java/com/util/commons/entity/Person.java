@@ -1,7 +1,6 @@
-package com.util.commons.entity.person;
+package com.util.commons.entity;
 import com.util.commons.abstraction.AbstractEntity;
 import com.util.commons.annotation.ExcludedCoverage;
-import com.util.commons.entity.address.Address;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

@@ -1,11 +1,11 @@
-package com.util.commons.entity.payableType;
+package com.util.commons.entity;
 
 import com.util.commons.abstraction.AbstractEntity;
 import com.util.commons.annotation.ExcludedCoverage;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-import java.util.Date;
+
+import java.util.List;
 
 @Entity
 @EqualsAndHashCode(callSuper = false)
@@ -14,15 +14,20 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Data
-public class PayableType extends AbstractEntity {
+@Table(name = "permission")
+public class Permission extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     private String description;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date registrationDate;
-}
+    @ManyToMany(mappedBy = "permissions")
+    private List<GroupsUser> userGroups;
 
+    @ManyToMany(mappedBy = "permissions")
+    private List<User> users;
+}

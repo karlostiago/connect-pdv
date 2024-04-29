@@ -1,8 +1,7 @@
-package com.util.commons.entity.payableInstallment;
+package com.util.commons.entity;
 
 import com.util.commons.abstraction.AbstractEntity;
 import com.util.commons.annotation.ExcludedCoverage;
-import com.util.commons.entity.payable.Payable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

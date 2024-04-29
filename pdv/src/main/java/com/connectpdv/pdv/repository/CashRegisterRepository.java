@@ -1,7 +1,7 @@
 package com.connectpdv.pdv.repository;
 
-import com.util.commons.entity.cash.Cash;
-import com.util.commons.entity.cashRegister.CashRegister;
+import com.util.commons.entity.Cash;
+import com.util.commons.entity.CashRegister;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,9 +1,7 @@
-package com.util.commons.entity.cash;
+package com.util.commons.entity;
 
 import com.util.commons.abstraction.AbstractEntity;
 import com.util.commons.annotation.ExcludedCoverage;
-import com.util.commons.entity.cashRegister.CashRegister;
-import com.util.commons.entity.user.User;
 import com.util.commons.enums.cash.CashType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

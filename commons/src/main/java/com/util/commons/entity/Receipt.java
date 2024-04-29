@@ -1,10 +1,7 @@
-package com.util.commons.entity.receipt;
+package com.util.commons.entity;
 
 import com.util.commons.abstraction.AbstractEntity;
 import com.util.commons.annotation.ExcludedCoverage;
-import com.util.commons.entity.installment.Installment;
-import com.util.commons.entity.person.Person;
-import com.util.commons.entity.title.Title;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

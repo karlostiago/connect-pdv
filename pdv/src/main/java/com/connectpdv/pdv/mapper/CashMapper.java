@@ -2,10 +2,12 @@ package com.connectpdv.pdv.mapper;
 
 import com.util.commons.annotation.ExcludedCoverage;
 import com.util.commons.dto.*;
-import com.util.commons.entity.address.Address;
-import com.util.commons.entity.cash.Cash;
-import com.util.commons.entity.person.Person;
-import com.util.commons.entity.user.User;
+import com.util.commons.entity.Address;
+import com.util.commons.entity.Cash;
+import com.util.commons.entity.Permission;
+import com.util.commons.entity.Person;
+import com.util.commons.entity.User;
+import com.util.commons.entity.GroupsUser;
 import com.util.commons.mapper.CollectionMapper;
 import com.util.commons.mapper.DtoMapper;
 import com.util.commons.mapper.EntityMapper;
@@ -39,40 +41,47 @@ public class CashMapper implements EntityMapper<Cash, CashDTO>, DtoMapper<Cash, 
         dto.setTypes(entity.getTypes());
 
         User user = entity.getUser();
-        if (user != null) {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setUserName(user.getUserName());
-            userDTO.setRegisterDate(user.getRegisterDate());
 
-            Person person = user.getPerson();
-            if (person != null) {
-                PersonDTO personDTO = new PersonDTO();
-                personDTO.setId(person.getId());
-                personDTO.setDocument(person.getDocument());
-                personDTO.setDateRegister(person.getDateRegister());
-                personDTO.setName(person.getName());
-                personDTO.setContact(person.getContact());
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setUserName(user.getUserName());
+        userDTO.setRegisterDate(user.getRegisterDate());
 
-                Address address = person.getAddress();
-                if (address != null) {
-                    AddressDTO addressDTO = new AddressDTO();
-                    addressDTO.setStreet(address.getStreet());
-                    addressDTO.setDistrict(address.getDistrict());
-                    addressDTO.setNumberHome(address.getNumberHome());
-                    addressDTO.setZipCode(address.getZipCode());
-                    addressDTO.setCity(address.getCity());
-                    addressDTO.setUf(address.getUf());
+        Person person = user.getPerson();
 
-                    personDTO.setAddress(addressDTO);
-                }
+        PersonDTO personDTO = new PersonDTO();
+        personDTO.setId(person.getId());
+        personDTO.setDocument(person.getDocument());
+        personDTO.setDateRegister(person.getDateRegister());
+        personDTO.setName(person.getName());
+        personDTO.setContact(person.getContact());
 
-                userDTO.setPerson(personDTO);
-            }
+        Address address = person.getAddress();
 
-            dto.setUser(userDTO);
-        }
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setStreet(address.getStreet());
+        addressDTO.setDistrict(address.getDistrict());
+        addressDTO.setNumberHome(address.getNumberHome());
+        addressDTO.setZipCode(address.getZipCode());
+        addressDTO.setCity(address.getCity());
+        addressDTO.setUf(address.getUf());
+        
+        List<GroupsUserDTO> userGroupsDTO = user.getGroupsUsers().stream()
+                .map(this::mapUserGroupToDTO)
+                .toList();
+        userDTO.setUserGroups(userGroupsDTO);
+        
+        List<PermissionDTO> permissionsDTO = user.getPermissions().stream()
+                .map(this::mapPermissionToDTO)
+                .toList();
+        userDTO.setPermissions(permissionsDTO);
 
+        dto.setUser(userDTO);
+        
+        personDTO.setAddress(addressDTO);
+        userDTO.setPerson(personDTO);
+        dto.setUser(userDTO);
+        
         return dto;
     }
 
@@ -99,6 +108,14 @@ public class CashMapper implements EntityMapper<Cash, CashDTO>, DtoMapper<Cash, 
         address.setCity(dto.getUser().getPerson().getAddress().getZipCode());
         address.setUf(dto.getUser().getPerson().getAddress().getUf());
 
+        Cash cash = getCash(dto, user);
+        user.setPerson(person);
+        person.setAddress(address);
+
+        return cash;
+    }
+
+    private static Cash getCash(CashDTO dto, User user) {
         Cash cash = new Cash();
 
         cash.setId(dto.getId());
@@ -113,9 +130,24 @@ public class CashMapper implements EntityMapper<Cash, CashDTO>, DtoMapper<Cash, 
         cash.setTypes(dto.getTypes());
 
         cash.setUser(user);
-        user.setPerson(person);
-        person.setAddress(address);
-
         return cash;
     }
+
+    private GroupsUserDTO mapUserGroupToDTO(GroupsUser userGroup) {
+        GroupsUserDTO userGroupDTO = new GroupsUserDTO();
+        userGroupDTO.setId(userGroup.getId());
+        userGroupDTO.setGroupName(userGroup.getGroupName());
+       
+        return userGroupDTO;
+    }
+
+    private PermissionDTO mapPermissionToDTO(Permission permission) {
+        PermissionDTO permissionDTO = new PermissionDTO();
+        permissionDTO.setId(permission.getId());
+        permissionDTO.setName(permission.getName());
+        permissionDTO.setDescription(permission.getDescription());
+        
+        return permissionDTO;
+    }
+
 }

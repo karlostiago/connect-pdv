@@ -1,6 +1,6 @@
 package com.connectpdv.pdv.service;
 
-import com.util.commons.entity.cash.Cash;
+import com.util.commons.entity.Cash;
 
 
 public interface CashService {
