@@ -1,0 +1,91 @@
+<div class="main-container" [class.loading-container]="showLoading">
+    <div class="loading" *ngIf="showLoading">
+        <div [class.loading-container]="loading-content">
+            {{ message }}
+        </div>
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
+</div>
+
+
+
+<div class="flex justify-content-between">
+    <h3>Caixas</h3>
+    <div class="flex justify-content-between">
+        <div class="d-flex align-items-center">
+            <button 
+                pButton pRipple 
+                type="button" 
+                label="Abrir novo caixa" 
+                class="p-button-raised p-button-warning ml-2" 
+                routerLink="/cash-operations/cash-register-opener">
+            </button>
+        </div>
+    </div>
+    
+</div>
+<div class="card shadow-3 mt-4 mb-4 p-0">
+    <p-table 
+        #myTab 
+        [value]="cashList"  
+        [rows]="10" 
+        [responsive]="true" 
+        [paginator]="true" 
+        [lazy]="true"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th>#</th>
+                <th>Descrição</th>
+                <th>Valor Total</th>
+                <th>Data Abertura</th>
+                <th>Data Fechamento</th>
+                <th class="col-acoes-header"></th>
+            </tr>
+        </ng-template>
+        <ng-template 
+            pTemplate="body" 
+            let-cashItem>
+
+            <tr *ngFor="let cashItem of cashList">
+                <td>
+                    {{ cashItem.id }}
+                </td>
+                <td>
+                    {{ cashItem.description }}
+                </td>
+                <td>
+                    {{ cashItem.totalValue }}
+                </td>
+                <td>
+                    {{ cashItem.registerDate}}
+                </td>
+                <td>
+                    {{ cashItem.closingDate  || 'Não possui data de fechamento'}}
+                </td>
+
+                <td>
+                    <label>
+                        <span 
+                         class="pi pi-money-bill" 
+                            style="font-size: 24px;">
+                        </span>
+                    </label>
+                </td> 
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">
+                    <span>Nenhum registro encontrado</span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div>
+                Totalizador: {{ cashList?.length }}
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+

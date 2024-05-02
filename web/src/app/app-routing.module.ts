@@ -18,9 +18,9 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                             },
 
                             {
-                                path: 'cash-register-withdrawal',
-                                loadChildren: () => import('./pages/cash-operations/components/cash-register-opener/cash-register-opener.module')
-                                    .then(m => m.CashRegisterOpenerModule)
+                                path: 'cash-register-list',
+                                loadChildren: () => import('./pages/cash-operations/components/cash-register-list/cash-register-list.module')
+                                    .then(m => m.CashRegisterListModule)
                             }
                         ]
                     }

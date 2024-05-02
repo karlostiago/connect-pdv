@@ -18,9 +18,14 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { PanelModule } from 'primeng/panel';
 import { MessagesModule } from 'primeng/messages';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+
 @NgModule({
     imports: [
         CommonModule,
+        TagModule,
         FormsModule,
         ProgressSpinnerModule,
         InputMaskModule,
@@ -40,7 +45,9 @@ import { MessagesModule } from 'primeng/messages';
         BreadcrumbModule,
         InputNumberModule,
         PanelModule,
-        MessagesModule
+        MessagesModule,
+        DropdownModule,
+        TableModule
     ],
     exports: [
         CommonModule,
@@ -63,7 +70,10 @@ import { MessagesModule } from 'primeng/messages';
         BreadcrumbModule,
         InputNumberModule,
         PanelModule,
-        MessagesModule
+        MessagesModule,
+        DropdownModule,
+        TableModule,
+        TagModule
     ]
 })
 export class PrimengModule { }

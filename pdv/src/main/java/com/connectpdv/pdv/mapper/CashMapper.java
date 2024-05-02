@@ -8,6 +8,7 @@ import com.util.commons.entity.Permission;
 import com.util.commons.entity.Person;
 import com.util.commons.entity.User;
 import com.util.commons.entity.GroupsUser;
+import com.util.commons.helper.DateHelper;
 import com.util.commons.mapper.CollectionMapper;
 import com.util.commons.mapper.DtoMapper;
 import com.util.commons.mapper.EntityMapper;
@@ -33,10 +34,10 @@ public class CashMapper implements EntityMapper<Cash, CashDTO>, DtoMapper<Cash, 
         dto.setDescription(entity.getDescription());
         dto.setOpeningValue(entity.getOpeningValue());
         dto.setTotalValue(entity.getTotalValue());
-        dto.setClosingDate(entity.getClosingDate());
+        dto.setClosingDate(DateHelper.parseAtDateFrom(String.valueOf(entity.getClosingDate())));
         dto.setEntryValue(entity.getEntryValue());
         dto.setExitValue(entity.getExitValue());
-        dto.setRegisterDate(entity.getRegisterDate());
+        dto.setRegisterDate(DateHelper.parseAtLocalDateFrom(entity.getRegisterDate()));
         dto.setClosingDate(entity.getClosingDate());
         dto.setTypes(entity.getTypes());
 
@@ -100,6 +101,16 @@ public class CashMapper implements EntityMapper<Cash, CashDTO>, DtoMapper<Cash, 
         user.setUserName(dto.getUser().getUserName());
         user.setRegisterDate(dto.getRegisterDate());
 
+        Address address = getAddress(dto);
+
+        Cash cash = getCash(dto, user);
+        user.setPerson(person);
+        person.setAddress(address);
+
+        return cash;
+    }
+
+    private static Address getAddress(CashDTO dto) {
         Address address = new Address();
         address.setStreet(dto.getUser().getPerson().getAddress().getStreet());
         address.setDistrict(dto.getUser().getPerson().getAddress().getDistrict());
@@ -107,12 +118,7 @@ public class CashMapper implements EntityMapper<Cash, CashDTO>, DtoMapper<Cash, 
         address.setZipCode(dto.getUser().getPerson().getAddress().getZipCode());
         address.setCity(dto.getUser().getPerson().getAddress().getZipCode());
         address.setUf(dto.getUser().getPerson().getAddress().getUf());
-
-        Cash cash = getCash(dto, user);
-        user.setPerson(person);
-        person.setAddress(address);
-
-        return cash;
+        return address;
     }
 
     private static Cash getCash(CashDTO dto, User user) {

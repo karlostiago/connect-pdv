@@ -9,10 +9,14 @@ import com.util.commons.entity.User;
 import com.util.commons.enums.cash.CashType;
 import com.util.commons.enums.entryStyle.EntryStyle;
 import com.util.commons.enums.entryType.EntryType;
+import com.util.commons.filter.CashFilter;
+import com.util.commons.helper.DateHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+
 import static com.util.commons.constants.CashConstants.*;
 
 @Component
@@ -40,7 +44,6 @@ public class CashServiceImpl implements CashService {
             String observation = applyDefaultDescriptionBasedOnCashTypeOf(cash);
 
             LocalDate actualDateOpenCash = LocalDate.now();
-
             cash.setRegisterDate(actualDateOpenCash);
             cash.setUser(user);
 
@@ -66,6 +69,23 @@ public class CashServiceImpl implements CashService {
     @Override
     public Cash supply(Long cashId, Cash cash) {
         return null;
+    }
+
+    @Override
+    public List<Cash> getOpeningCashBy(CashFilter cashFilter) {
+        String registerDateFilter = cashFilter.getRegisterDate();
+
+        if (StringUtils.isNotBlank(registerDateFilter)) {
+            LocalDate registerDate = DateHelper.parseDateFrom(registerDateFilter);
+            return cashRepository.findCashByRegisterDate(registerDate);
+        }
+
+        return findAllOpeningCash();
+    }
+
+    @Override
+    public List<Cash> findAllOpeningCash() {
+        return cashRepository.findOpenCash();
     }
 
     @Override
