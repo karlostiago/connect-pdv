@@ -1,11 +1,3 @@
-<div class="main-container" [class.loading-container]="showLoading">
-    <div class="loading" *ngIf="showLoading">
-        <div [class.loading-container]="loading-content">
-            {{ message }}
-        </div>
-        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
-    </div>
-</div>
 <div class="flex justify-content-between">
     <h3>Caixas</h3>
     <div class="flex justify-content-between">
@@ -27,8 +19,7 @@
         [rows]="10" 
         [responsive]="true" 
         [paginator]="true" 
-        [lazy]="true"
-    >
+        [lazy]="true">
         <ng-template pTemplate="header">
             <tr>
                 <th>#</th>

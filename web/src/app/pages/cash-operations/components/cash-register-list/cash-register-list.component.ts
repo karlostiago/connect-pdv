@@ -11,30 +11,20 @@ import { Router } from '@angular/router';
 export class CashRegisterListComponent implements OnInit {
 
   cashList: Cash[];
-  showLoading: boolean = true;
-
-  message = 'Carergando....';
   
-  constructor(private cashOperationService: CashOperationsService, private router: Router) {
-
-  }
+  constructor(private cashOperationService: CashOperationsService, private router: Router) {}
 
   ngOnInit(): void {
-    this.buscarOpeningCash();
+    this.searchAllCash();
   }
 
-  buscarOpeningCash() {
-    setTimeout(() => {
-      this.cashOperationService.allOpeningCash().subscribe((data) => {
-        this.cashList = data;
-        this.showLoading = false;
-        console.log(data);
+  searchAllCash() {
+    this.cashOperationService.allOpeningCash().then((data) => {
+      this.cashList = data;
       });
-    }, 3000);
   }
 
   navigateToCashFlow(cashId: string) {
       this.router.navigate(['/cash-flow', cashId]);
   }
-
 }

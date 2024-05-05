@@ -21,6 +21,7 @@ import { MessagesModule } from 'primeng/messages';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import { TagModule } from 'primeng/tag';
         PanelModule,
         MessagesModule,
         DropdownModule,
-        TableModule
+        TableModule,
+        ToastModule
     ],
     exports: [
         CommonModule,
@@ -73,7 +75,8 @@ import { TagModule } from 'primeng/tag';
         MessagesModule,
         DropdownModule,
         TableModule,
-        TagModule
+        TagModule,
+        ToastModule
     ]
 })
 export class PrimengModule { }

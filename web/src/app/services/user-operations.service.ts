@@ -1,21 +1,24 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import { ApiService } from "src/app/core/service/api.service";
 import { User } from "../models/user.model";
+import { ErroHandlerService } from "../core/service/error-handler.service";
 
 
 @Injectable({ providedIn: 'root' })
 export class UserOperationsService extends ApiService<any> {
 
-    static PATH = '/connect-pdv/pdv/api/users';
-    protected readonly PATH = UserOperationsService.PATH;
-
-    constructor(protected override httpClient: HttpClient) {
-        super(httpClient);
+    protected override pathURL(): string {
+        return 'users';
     }
 
-    getAllUsers(): Observable<User[]> { 
-        return this.get('all-users');
+    constructor(private httpClient: HttpClient,
+        protected override error: ErroHandlerService) {
+        super(error);
+    }
+
+    getAllUsers(): Promise<User[]> {
+        const request = this.httpClient.get(`${this.baseURL}/${this.pathURL()}/all-users`, this.options());
+        return this.toPromise(request);
     }
 }

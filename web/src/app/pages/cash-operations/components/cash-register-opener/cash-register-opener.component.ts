@@ -16,11 +16,7 @@ import { ErroHandlerService } from 'src/app/core/service/error-handler.service';
 })
 export class CashRegisterOpenerComponent implements OnInit {
 
-  showLoading = false;
-  messageLoading = 'Processando...';
   
-
-  messages: Message[] = [];
   cash: Cash = new Cash();
 
   users: User[] = [];
@@ -33,7 +29,6 @@ export class CashRegisterOpenerComponent implements OnInit {
   showAccountInput = false;
 
   constructor(
-    private messageService: MessageService,
     private userOperationsService: UserOperationsService,
     private cashOperationsService: CashOperationsService,
     private alertService: AlertService,
@@ -61,38 +56,19 @@ export class CashRegisterOpenerComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.showLoading = true;
-    this.userOperationsService.getAllUsers().subscribe({
-      
-      next: (users: User[]) => {
+    this.userOperationsService.getAllUsers().then( users => {
         this.users = users;
-        this.showLoading = false;
-      },
-      error: () => {
-        this.showLoading = false;
-      }
     });
   }
 
   confirmCashRegister(): void {
-    if (this.selectedUserId !== null && this.users.some(user => user.id === this.selectedUserId)) {
-      
         const selectedUser = this.users.find(user => user.id === this.selectedUserId);
 
         this.cash.user = selectedUser;
-        this.showLoading = true;
 
-        this.cashOperationsService.openCash(this.cash).subscribe({
-            next: () => {
-                this.showLoading = false;
-                this.alertService.sucess('Operação executada com sucesso!');
-            },
-            error: (errorMessage: ErroHandlerService ) => {
-                this.showLoading = false;
-                this.errorHandler.capturar(errorMessage);
-            }
-        });
-    }
+        this.cashOperationsService.openCash(this.cash).then(() => {
+        this.alertService.sucess('Operação executada com sucesso!!!!');
+    });
   }
 
   showAccountAndAgency() {
@@ -101,7 +77,7 @@ export class CashRegisterOpenerComponent implements OnInit {
   }
 
   cancelCashRegister(): void {
-    this.messageService.add({ severity: 'info', summary: 'Operação cancelada:', detail: 'Abertura de caixa.' });
+    this.alertService.info('A operação foi cancelada com sucesso!!!');
   }
 
   areFieldsValid(): boolean {

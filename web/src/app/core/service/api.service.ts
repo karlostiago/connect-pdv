@@ -1,57 +1,42 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Resource } from '../model/resource.model';
+import { ErroHandlerService } from './error-handler.service';
+import { environment } from 'src/environments/environment';
 
-export abstract class ApiService<T extends Resource> {
+export abstract class ApiService<T> {
 
-  protected abstract readonly PATH: string;
+  protected baseURL = environment.apiUrl;
 
-  constructor(protected httpClient: HttpClient) { }
-
-  post(resource: T, endpoint = ''): Observable<any> {
-    return this.httpClient.post(`${this.PATH}/${endpoint}`, resource);
-}
-
-  put(resource: T, endpoint = ''): Observable<any> {
-    return this.httpClient.put(`${this.PATH}/${endpoint}`, resource);
+  protected constructor(
+      protected error: ErroHandlerService) {
   }
 
-  patch(resource: any, endpoint = ''): Observable<any> {
+  protected abstract pathURL(): string;
 
-    return this.httpClient.patch(`${this.PATH}/${endpoint}`, resource);
+  options(httpParams: HttpParams = new HttpParams()) {
+      return {
+          headers: this.headers(),
+          httpParams
+      }
   }
 
-  getPage(endpoint = '', parameters = {}): Observable<any> {
-    const url = `${this.PATH}/${endpoint}`;
-    return this.httpClient.get<Page<T>>(url, { params: parameters });
+  headers(): HttpHeaders {
+      let headers = new HttpHeaders();
+      headers = headers.append("Content-Type", "application/json");
+      return headers;
   }
 
-  get(endpoint = '', parameters = {}): Observable<any> {
-    return this.getPage(endpoint, parameters).pipe(
-      map(res => {
-        return res && res.content ? res.content : res;
+  toPromise<T>(request: Observable<Object>): Promise<T> {
+      return new Promise((resolve) => {
+          request.subscribe({
+              next: (data) => {
+                  resolve(data as T);
+              },
+              error: (error) => {
+                  this.error.capturar(error);
+              }
+          })
       })
-    );
-  }
-
-  getById(id = ''): Observable<T> {
-    const url = `${this.PATH}/${id}`;
-    return this.httpClient.get<T>(url);
-  }
-
-  delete(id: any, parameters = {}, endpoint = ''): Observable<any> {
-    console.log('Delete:' + id);
-
-    let url = `${this.PATH}`;
-
-    if (endpoint) {
-      url += `/${endpoint}`;
-    }
-
-    url += `/${id}`;
-
-    return this.httpClient.delete(url, parameters);
   }
 }
 

@@ -1,24 +1,27 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import { ApiService } from "src/app/core/service/api.service";
 import { Cash } from "../models/cash.model";
+import { ErroHandlerService } from "../core/service/error-handler.service";
 
 @Injectable({ providedIn: 'root' })
 export class CashOperationsService extends ApiService<any> {
 
-    static PATH = '/connect-pdv/pdv/api/cash';
-    protected readonly PATH = CashOperationsService.PATH;
-
-    constructor(protected override httpClient: HttpClient) {
-        super(httpClient);
+    protected override pathURL(): string {
+        return 'cash'
     }
 
-    allOpeningCash(): Observable<Cash[]> { 
-        return this.get('opening-cash');
+    constructor(private httpClient: HttpClient,
+        protected override error: ErroHandlerService) {
+        super(error);
+    }
+    allOpeningCash(): Promise<Cash[]> { 
+        const request = this.httpClient.get(`${this.baseURL}/${this.pathURL()}/all-cash`, this.options());
+        return this.toPromise(request);
     }
 
-    openCash(cash: Cash): Observable<Cash> {
-        return this.post(cash, 'openCash');
+    openCash(cash: Cash): Promise<Cash> {
+        const request = this.httpClient.post(`${this.baseURL}/${this.pathURL()}/openCash`, JSON.stringify(cash), this.options());
+        return this.toPromise(request);
     }
 }

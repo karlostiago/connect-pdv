@@ -63,8 +63,8 @@ public class CashServiceImpl implements CashService {
             cash.setTotalValue(cash.getOpeningValue());
             cashRepository.save(cash);
 
-        } catch (NotificationException e) {
-            throw new NotificationException(MESSAGE_ERROR + e.getMessage());
+        } catch (Exception e) {
+            throw new NotificationException(MESSAGE_ERROR + e);
         }
         return cash;
     }
