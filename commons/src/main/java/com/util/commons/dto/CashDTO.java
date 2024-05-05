@@ -15,6 +15,10 @@ public class CashDTO {
 
     private String description;
 
+    private String account;
+
+    private String agency;
+
     private BigDecimal openingValue;
 
     private BigDecimal totalValue;

@@ -11,5 +11,7 @@ export class Cash {
     registerDate:string;
     closingDate:string;
     types :string;
+    agency:string
+    account:string
     user = new User();
 }

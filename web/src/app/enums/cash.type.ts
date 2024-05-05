@@ -1,5 +1,5 @@
 export enum CashType {
-    CASH = "Caixa",
-    SAFE = "Cofre",
-    BANK = "Banco"
+    CAIXA = "Caixa",
+    COFRE = "Cofre",
+    BANCO = "Banco"
 }

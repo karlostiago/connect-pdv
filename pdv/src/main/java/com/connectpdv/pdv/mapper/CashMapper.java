@@ -32,6 +32,8 @@ public class CashMapper implements EntityMapper<Cash, CashDTO>, DtoMapper<Cash, 
 
         dto.setId(entity.getId());
         dto.setDescription(entity.getDescription());
+        dto.setAccount(entity.getAccount());
+        dto.setAgency(entity.getAgency());
         dto.setOpeningValue(entity.getOpeningValue());
         dto.setTotalValue(entity.getTotalValue());
         dto.setClosingDate(DateHelper.parseAtDateFrom(String.valueOf(entity.getClosingDate())));
@@ -134,7 +136,8 @@ public class CashMapper implements EntityMapper<Cash, CashDTO>, DtoMapper<Cash, 
         cash.setRegisterDate(dto.getRegisterDate());
         cash.setClosingDate(dto.getClosingDate());
         cash.setTypes(dto.getTypes());
-
+        cash.setAccount(dto.getAccount());
+        cash.setAgency(dto.getAgency());
         cash.setUser(user);
         return cash;
     }

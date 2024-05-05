@@ -136,10 +136,8 @@ public class CashServiceImpl implements CashService {
             throw new NotificationException(CASH_NOT_OPEN_OR_EXISTES);
         }
 
-        if (cash.getTypes().equals(CashType.BANCO) 
-            && cash.getAgency() != null || cash.getAccount() != null ) {
-
-            assert cash.getAgency() != null;
+        if (CashType.BANCO.equals(cash.getTypes()) 
+            && cash.getAgency() != null && cash.getAccount() != null) {
             cash.setAgency(cash.getAgency().replaceAll("\\D", ""));
             cash.setAccount(cash.getAccount().replaceAll("\\D", ""));
         }

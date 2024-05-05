@@ -60,12 +60,47 @@
                         </label>
                     </span>
                 </div>
+
+                <div class="field col-12 md:col-12 p-3" *ngIf="showAgencyInput">
+                    <span class="p-float-label">
+                        <input
+                            required
+                            pInputText 
+                            id="agency" 
+                            [(ngModel)]="cash.agency" 
+                            [style]="{ width: '100%' }" 
+                        />
+                        <label 
+                            for="agency">
+                            Agência *
+                        </label>
+                    </span>
+                </div>
+                
+                <div class="field col-12 md:col-12 p-3" *ngIf="showAccountInput">
+                    <span class="p-float-label">
+                        <input 
+                            pInputText 
+                            id="account" 
+                            [(ngModel)]="cash.account" 
+                            [style]="{ width: '100%' }" 
+                            required 
+                        />
+                        <label 
+                            for="account">
+                            Conta *
+                        </label>
+                    </span>
+                </div>
+                
                 <div class="field col-12 md:col-12 p-3">
                     <span class="p-float-label">
                         <p-dropdown 
                             [(ngModel)]="cash.types" 
                             [options]="cashTypes"  
-                            [style]="{ width: '100%' }">
+                            [style]="{ width: '100%' }"
+                            (onChange)="showAccountAndAgency()"
+                            required >
                         </p-dropdown>
                         <label>Selecione o tipo de caixa *</label>
                     </span>
@@ -74,6 +109,7 @@
                 <div class="field col-12 md:col-12 p-3">
                     <span class="p-float-label">
                         <p-dropdown 
+                        required 
                         [(ngModel)]="selectedUserId" 
                         [options]="users" 
                         optionValue="id" 
@@ -88,6 +124,7 @@
                     <span class="p-float-label">
                         <p-inputNumber 
                         id="currency-br" 
+                        required 
                         [mode]="'currency'" 
                         [currency]="'BRL'" 
                         [locale]="'pt-BR'" 
@@ -114,7 +151,8 @@
                         label="Confirmar 
                         abertura de caixa" 
                         class="p-button-raised p-button-warning" 
-                        (click)="confirmCashRegister()">
+                        (click)="confirmCashRegister()"
+                        [disabled]="!areFieldsValid()">
                     </button>
                     <button 
                         pButton 
