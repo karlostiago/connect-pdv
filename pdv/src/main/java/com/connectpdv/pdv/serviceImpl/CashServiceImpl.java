@@ -41,7 +41,10 @@ public class CashServiceImpl implements CashService {
             validateCashOpenOfDaysAndValueAcceptable(cash);
 
             User user = userServiceImpl.findUserBy(cash.getUser().getUserName());
-            String observation = applyDefaultDescriptionBasedOnCashTypeOf(cash);
+
+            if (StringUtils.isBlank(cash.getDescription())) {
+                applyDefaultDescriptionBasedOnCashTypeOf(cash);
+            }
 
             LocalDate actualDateOpenCash = LocalDate.now();
             cash.setRegisterDate(actualDateOpenCash);
@@ -49,8 +52,8 @@ public class CashServiceImpl implements CashService {
 
             sanitizeBankCashDetailsOf(cash);
 
-            if (isOpeningValueGreaterThanDefault(cash)) {
-                CashRegister cashBuilder = buildCashRegister(cash, user, observation);
+            if (cash.getOpeningValue().compareTo(BigDecimal.ZERO) > VALUE_DEFAULT_CASH_OPERATION) {
+                CashRegister cashBuilder = buildCashRegister(cash, user, cash.getDescription());
                 cashRegisterServiceImpl.register(cashBuilder);
 
             } else if (isOpeningValueEqualToDefault(cash)) {
@@ -93,22 +96,6 @@ public class CashServiceImpl implements CashService {
         return cashRepository.fetchOpenCash().isPresent();
     }
 
-    private boolean isOpeningValueGreaterThanDefault(Cash cash) {
-        BigDecimal openingValue = cash.getOpeningValue();
-        boolean isGreaterThanDefault = openingValue.compareTo(BigDecimal.ZERO) > VALUE_DEFAULT_CASH_OPERATION;
-
-        if (isGreaterThanDefault) {
-            String description = switch (cash.getTypes()) {
-                case CAIXA -> INCOMING_CASH_DESCRIPTION;
-                case COFRE -> INCOMING_SAFE_DESCRIPTION;
-                case BANCO -> INCOMING_BANK_DESCRIPTION;
-                default -> NO_AVAILABLE_REGISTER_FOUND;
-            };
-            cash.setDescription(description);
-        }
-        return isGreaterThanDefault;
-    }
-
     private boolean isOpeningValueEqualToDefault(Cash cash) {
         return cash.getOpeningValue().compareTo(BigDecimal.ZERO) == VALUE_DEFAULT_CASH_OPERATION;
     }
@@ -127,7 +114,7 @@ public class CashServiceImpl implements CashService {
         }
     }
 
-    private String applyDefaultDescriptionBasedOnCashTypeOf(Cash cash) {
+    private void applyDefaultDescriptionBasedOnCashTypeOf(Cash cash) {
         if (cash == null) {
             throw new IllegalArgumentException(CASH_NOT_OPEN_OR_EXISTES);
         }
@@ -142,7 +129,6 @@ public class CashServiceImpl implements CashService {
             };
             cash.setDescription(defaultDescription);
         }
-        return observation;
     }
 
     private void sanitizeBankCashDetailsOf(Cash cash) {
@@ -152,6 +138,8 @@ public class CashServiceImpl implements CashService {
 
         if (cash.getTypes().equals(CashType.BANCO) 
             && cash.getAgency() != null || cash.getAccount() != null ) {
+
+            assert cash.getAgency() != null;
             cash.setAgency(cash.getAgency().replaceAll("\\D", ""));
             cash.setAccount(cash.getAccount().replaceAll("\\D", ""));
         }
