@@ -59,13 +59,13 @@ public class CashController {
     @GetMapping("/opening-cash")
     public ResponseEntity<List<CashDTO>> allOpeningCash() {
         try {
-            List<Cash> openingCash = cashService.findAllOpeningCash();
+            List<Cash> filterCash = cashService.findAllOpeningCash();
 
-            if (openingCash == null || openingCash.isEmpty()) {
+            if (filterCash == null || filterCash.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
 
-            List<CashDTO> openingCashDTO = cashMapper.toList(openingCash);
+            List<CashDTO> openingCashDTO = cashMapper.toList(filterCash);
             return ResponseEntity.ok(openingCashDTO);
 
         } catch (Exception e) {

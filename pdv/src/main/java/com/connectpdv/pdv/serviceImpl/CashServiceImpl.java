@@ -99,9 +99,9 @@ public class CashServiceImpl implements CashService {
 
         if (isGreaterThanDefault) {
             String description = switch (cash.getTypes()) {
-                case CASH -> INCOMING_CASH_DESCRIPTION;
-                case SAFE -> INCOMING_SAFE_DESCRIPTION;
-                case BANK -> INCOMING_BANK_DESCRIPTION;
+                case CAIXA -> INCOMING_CASH_DESCRIPTION;
+                case COFRE -> INCOMING_SAFE_DESCRIPTION;
+                case BANCO -> INCOMING_BANK_DESCRIPTION;
                 default -> NO_AVAILABLE_REGISTER_FOUND;
             };
             cash.setDescription(description);
@@ -118,7 +118,7 @@ public class CashServiceImpl implements CashService {
             throw new NotificationException(CASH_NOT_OPEN_OR_EXISTES);
         }
 
-        if (CashType.CASH.equals(cash.getTypes()) && cashIsOpen()) {
+        if (CashType.CAIXA.equals(cash.getTypes()) && cashIsOpen()) {
             throw new NotificationException(DAYS_OLD_CASH_OPEN);
         }
 
@@ -135,9 +135,9 @@ public class CashServiceImpl implements CashService {
 
         if (StringUtils.isBlank(observation)) {
             String defaultDescription = switch (cash.getTypes()) {
-                case CASH -> DAILY_CASH_DESCRIPTION;
-                case SAFE -> SAFE_CASH_DESCRIPTION;
-                case BANK -> BANK_CASH_DESCRIPTION;
+                case CAIXA -> DAILY_CASH_DESCRIPTION;
+                case COFRE -> SAFE_CASH_DESCRIPTION;
+                case BANCO -> BANK_CASH_DESCRIPTION;
                 default -> CASH_NOT_RECOGNIZED;
             };
             cash.setDescription(defaultDescription);
@@ -150,7 +150,8 @@ public class CashServiceImpl implements CashService {
             throw new NotificationException(CASH_NOT_OPEN_OR_EXISTES);
         }
 
-        if (cash.getTypes().equals(CashType.BANK)) {
+        if (cash.getTypes().equals(CashType.BANCO) 
+            && cash.getAgency() != null || cash.getAccount() != null ) {
             cash.setAgency(cash.getAgency().replaceAll("\\D", ""));
             cash.setAccount(cash.getAccount().replaceAll("\\D", ""));
         }

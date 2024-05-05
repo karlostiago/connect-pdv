@@ -17,4 +17,8 @@ export class CashOperationsService extends ApiService<any> {
     allOpeningCash(): Observable<Cash[]> { 
         return this.get('opening-cash');
     }
+
+    openCash(cash: Cash): Observable<Cash> {
+        return this.post(cash, 'openCash');
+    }
 }

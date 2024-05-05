@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CashRepository extends JpaRepository<Cash, Long> {
-    @Query("select c from Cash c where c.types = 'CASH' and c.closingDate is null")
+    @Query("select c from Cash c WHERE c.types = 'CAIXA' AND c.closingDate is null")
     Optional<Cash> fetchOpenCash();
 
-    @Query("SELECT c FROM Cash c WHERE c.types = 'CASH' OR c.types = 'SAFE' AND CAST(c.registerDate AS date) = ?1 ORDER BY c.id DESC")
+    @Query("SELECT c FROM Cash c WHERE c.types = 'CAIXA' OR c.types = 'COFRE' AND CAST(c.registerDate AS date) = ?1 ORDER BY c.id DESC")
     List<Cash> findCashByRegisterDate(LocalDate date);
 
-    @Query("select c from Cash c where c.closingDate is null")
+    @Query("SELECT c FROM Cash c WHERE c.closingDate is null")
     List<Cash> findOpenCash();
 }

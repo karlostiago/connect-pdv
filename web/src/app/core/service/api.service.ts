@@ -9,9 +9,9 @@ export abstract class ApiService<T extends Resource> {
 
   constructor(protected httpClient: HttpClient) { }
 
-  post(resource: T, endpoint = '',): Observable<any> {
+  post(resource: T, endpoint = ''): Observable<any> {
     return this.httpClient.post(`${this.PATH}/${endpoint}`, resource);
-  }
+}
 
   put(resource: T, endpoint = ''): Observable<any> {
     return this.httpClient.put(`${this.PATH}/${endpoint}`, resource);

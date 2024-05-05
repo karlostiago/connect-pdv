@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum CashType {
-    CASH("Caixa"), SAFE("Cofre"), BANK("Banco");
+    CAIXA("CAIXA"), COFRE("COFRE"), BANCO("BANCO");
 
     private final String description;
 

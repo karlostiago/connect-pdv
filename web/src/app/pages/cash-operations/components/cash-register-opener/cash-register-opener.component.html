@@ -32,15 +32,15 @@
             <div class="formgrid grid">
                 <div class="field col-12 md:col-8 p-3">
                     <span class="p-float-label">
-                        <input 
-                            [style]="{ width: '100%' }" 
-                            class="w-full" 
-                            pInputText id="codigo" 
-                        />
+                        <input [(ngModel)]="cash.description" 
+                               [style]="{ width: '100%' }" 
+                               class="w-full" 
+                               pInputText id="codigo" 
+                               />
                         <label 
                             for="codigo">
-                            Observação
-                        </label>
+                                Observação
+                            </label>
                     </span>
                 </div>
 
@@ -50,52 +50,51 @@
                             pInputText 
                             id="codigo" 
                             disabled 
-                            [style]="{ width: '100%' }"
-                        />
+                            [(ngModel)]="cash.id" 
+                            [style]="{ width: '100%' }" 
+                            />
                         <label 
                             for="codigo">
                             Código Caixa
                         </label>
                     </span>
                 </div>
-
                 <div class="field col-12 md:col-12 p-3">
                     <span class="p-float-label">
                         <p-dropdown 
-                            [(ngModel)]="selectedCashType" 
-                            [options]="cashTypes" 
-                            optionLabel="description" 
+                            [(ngModel)]="cash.types" 
+                            [options]="cashTypes"  
                             [style]="{ width: '100%' }">
                         </p-dropdown>
                         <label>Selecione o tipo de caixa *</label>
                     </span>
                 </div>
-                
+
                 <div class="field col-12 md:col-12 p-3">
                     <span class="p-float-label">
                         <p-dropdown 
-                        [(ngModel)]="userId" 
+                        [(ngModel)]="selectedUserId" 
                         [options]="users" 
+                        optionValue="id" 
                         optionLabel="userName" 
                         [style]="{ width: '100%' }">
-                        </p-dropdown>
+                    </p-dropdown>
                         <label>Selecione o usuário PDV*</label>
                     </span>
                 </div>
-                
+
                 <div class="field col-12 md:col-6 p-3">
                     <span class="p-float-label">
-                        <p-inputNumber  
-                            id="currency-br" 
-                            [mode]="'currency'" 
-                            [currency]="'BRL'" 
-                            [locale]="'pt-BR'" 
-                            placeholder="R$ 0.00" 
-                            [style]="{ width: '100%' }" 
-                            class="w-full" 
-                            [ngModel]="initialbalance">
-                        </p-inputNumber>
-
+                        <p-inputNumber 
+                        id="currency-br" 
+                        [mode]="'currency'" 
+                        [currency]="'BRL'" 
+                        [locale]="'pt-BR'" 
+                        placeholder="R$ 0.00" 
+                        [style]="{ width: '100%' }" 
+                        class="w-full" 
+                        [(ngModel)]="cash.openingValue">
+                    </p-inputNumber>
                         <label 
                             for="float-input" 
                             class="obrigatorio">
@@ -110,13 +109,13 @@
                     <button 
                         pButton 
                         pRipple 
-                        type="button" 
+                        type="button"
                         label="Confirmar 
                         abertura de caixa" 
                         class="p-button-raised p-button-warning" 
                         (click)="confirmCashRegister()">
                     </button>
-                    <button     
+                    <button 
                         pButton 
                         pRipple 
                         type="button" 
@@ -124,7 +123,7 @@
                         class="p-button-raised p-button-danger" 
                         (click)="cancelCashRegister()">
                     </button>
-                </div>    
+                </div>
             </ng-template>
         </p-panel>
     </div>

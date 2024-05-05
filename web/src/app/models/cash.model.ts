@@ -1,4 +1,4 @@
-import { CashType } from "../enums/cash.type";
+import { User } from "./user.model";
 
 export class Cash {
     id: number;
@@ -10,6 +10,6 @@ export class Cash {
     exitValue:number;
     registerDate:string;
     closingDate:string;
-    types: CashType;
-    
+    types :string;
+    user = new User();
 }
