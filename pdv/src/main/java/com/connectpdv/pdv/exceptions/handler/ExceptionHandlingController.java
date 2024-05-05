@@ -18,6 +18,7 @@ public class ExceptionHandlingController {
         List<Error> errors = new ArrayList<>();
         Error error = ErrorBuilder.builder()
                 .withStatus(HttpStatus.BAD_REQUEST)
+                .withTypeError(ex.getTypeError().name())
                 .withMessage(ex.getMessage())
                 .withDetails(ex)
                 .build();

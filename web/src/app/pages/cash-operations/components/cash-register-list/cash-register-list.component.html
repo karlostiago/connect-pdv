@@ -6,9 +6,6 @@
         <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
     </div>
 </div>
-
-
-
 <div class="flex justify-content-between">
     <h3>Caixas</h3>
     <div class="flex justify-content-between">
@@ -21,8 +18,7 @@
                 routerLink="/cash-operations/cash-register-opener">
             </button>
         </div>
-    </div>
-    
+    </div>   
 </div>
 <div class="card shadow-3 mt-4 mb-4 p-0">
     <p-table 
@@ -67,11 +63,13 @@
                 <td>
                     <label>
                         <span 
-                         class="pi pi-money-bill" 
-                            style="font-size: 24px;">
+                            class="pi pi-money-bill" 
+                            style="font-size: 24px; cursor: pointer;"
+                            (click)="navigateToCashFlow(cashItem.id)">
                         </span>
                     </label>
-                </td> 
+                </td>
+                 
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

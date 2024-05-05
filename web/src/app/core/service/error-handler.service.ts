@@ -18,7 +18,16 @@ export class ErroHandlerService {
         }
         else {
             for (const erro of errorResponse.error) {
-                this.notification.error(erro['mensagem']);
+
+                if(erro.errorType === 'ERROR') {
+                    this.notification.error(erro['mensagem']);
+                } else if (erro.errorType === 'WARN') {
+                    this.notification.warn(erro['mensagem']);
+                } else if (erro.erroType === 'INFO') {
+                    this.notification.info(erro['mensagem']);
+                } else if (erro.erroType === 'SUCCESS') {
+                    this.notification.sucess(erro['mensagem']);
+                }
             }
         }
     }

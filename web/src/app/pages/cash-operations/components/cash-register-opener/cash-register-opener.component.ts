@@ -5,6 +5,8 @@ import { Cash } from 'src/app/models/cash.model';
 import { UserOperationsService } from 'src/app/services/user-operations.service';
 import { CashOperationsService } from 'src/app/services/cash-operations.service';
 import { CashType } from 'src/app/enums/cash.type';
+import { AlertService } from 'src/app/core/service/alert.service';
+import { ErroHandlerService } from 'src/app/core/service/error-handler.service';
 
 @Component({
   selector: 'app-cash-register-opener',
@@ -33,7 +35,9 @@ export class CashRegisterOpenerComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private userOperationsService: UserOperationsService,
-    private cashOperationsService: CashOperationsService
+    private cashOperationsService: CashOperationsService,
+    private alertService: AlertService,
+    private errorHandler: ErroHandlerService
   ) {}
 
   ngOnInit(): void {
@@ -81,11 +85,11 @@ export class CashRegisterOpenerComponent implements OnInit {
         this.cashOperationsService.openCash(this.cash).subscribe({
             next: () => {
                 this.showLoading = false;
-                this.messageService.add({ severity: 'success', summary: 'Operação executada com sucesso:', detail: 'Abertura de caixa.' });
+                this.alertService.sucess('Operação executada com sucesso!');
             },
-            error: () => {
+            error: (errorMessage: ErroHandlerService ) => {
                 this.showLoading = false;
-                this.messageService.add({ severity: 'error', summary: 'Erro ao efetuar a operação:', detail: 'Abertura de caixa.' });
+                this.errorHandler.capturar(errorMessage);
             }
         });
     }

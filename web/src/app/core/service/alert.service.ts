@@ -21,6 +21,10 @@ export class AlertService {
         this.generateMessage(mensagem, 'warn', 'Atenção');
     }
 
+    info(mensagem: string) {
+        this.generateMessage(mensagem, 'info', 'Informação')
+    }
+
     private generateMessage(message: string, severity: string, sumary: string) {
         this.messageService.add({
             severity: severity,

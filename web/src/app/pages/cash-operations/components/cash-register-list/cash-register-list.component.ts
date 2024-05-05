@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CashOperationsService } from '../../../../services/cash-operations.service';
 import { Cash } from 'src/app/models/cash.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cash-register-list',
@@ -14,7 +15,7 @@ export class CashRegisterListComponent implements OnInit {
 
   message = 'Carergando....';
   
-  constructor(private cashOperationService: CashOperationsService) {
+  constructor(private cashOperationService: CashOperationsService, private router: Router) {
 
   }
 
@@ -31,4 +32,9 @@ export class CashRegisterListComponent implements OnInit {
       });
     }, 3000);
   }
+
+  navigateToCashFlow(cashId: string) {
+      this.router.navigate(['/cash-flow', cashId]);
+  }
+
 }

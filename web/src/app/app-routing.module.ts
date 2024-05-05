@@ -21,7 +21,13 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                                 path: 'cash-register-list',
                                 loadChildren: () => import('./pages/cash-operations/components/cash-register-list/cash-register-list.module')
                                     .then(m => m.CashRegisterListModule)
+                            },
+                            {
+                                path: 'cash-flow/:cashId',
+                                loadChildren: () => import ('./pages/cash-operations/components/cash-flow/cash-flow.module')
+                                    .then(m => m.CashFlowModule)
                             }
+
                         ]
                     }
                 ]

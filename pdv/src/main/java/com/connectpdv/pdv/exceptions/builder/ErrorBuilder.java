@@ -21,6 +21,11 @@ public class ErrorBuilder {
         return this;
     }
 
+    public ErrorBuilder withTypeError(String typeError) {
+        error.setErrorType(typeError);
+        return this;
+    }
+
     public ErrorBuilder withMessage(String message) {
         error.setMessage(message);
         return this;

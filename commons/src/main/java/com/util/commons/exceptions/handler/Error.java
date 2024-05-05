@@ -19,6 +19,9 @@ public class Error {
     @Setter
     private Integer code;
 
+    @Setter
+    private String errorType;
+
     private final LocalDate date = LocalDate.now();
 
     private final LocalTime time = LocalTime.now();

@@ -116,7 +116,7 @@ public class CashServiceImpl implements CashService {
 
     private void applyDefaultDescriptionBasedOnCashTypeOf(Cash cash) {
         if (cash == null) {
-            throw new IllegalArgumentException(CASH_NOT_OPEN_OR_EXISTES);
+            throw new NotificationException(CASH_NOT_OPEN_OR_EXISTES);
         }
         String observation = cash.getDescription();
 
